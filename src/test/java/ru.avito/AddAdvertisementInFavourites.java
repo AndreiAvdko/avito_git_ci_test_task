@@ -11,10 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-
-import java.io.File;
-import java.io.IOException;
 
 import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.$;
@@ -32,7 +28,6 @@ public class AddAdvertisementInFavourites {
     static void beforeAll() {
         Configuration.browser = "chrome";
         Configuration.browserSize = "1920x1080";
-        Configuration.pageLoadStrategy = "eager";
     }
     @Test
     @Severity(SeverityLevel.CRITICAL)
