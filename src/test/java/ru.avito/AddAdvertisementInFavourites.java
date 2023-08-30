@@ -12,6 +12,9 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
+import static com.codeborne.selenide.Condition.cssValue;
+import static com.codeborne.selenide.Condition.exist;
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
@@ -19,6 +22,7 @@ import static io.qameta.allure.Allure.step;
 
 public class AddAdvertisementInFavourites {
     private static final String baseURL = "https://www.avito.ru";
+    private static final String cardURL = "/nikel/knigi_i_zhurnaly/domain-driven_design_distilled_vaughn_vernon_2639542363";
     @Attachment(value="Screenchot", type="image/png", fileExtension = "png")
     public byte[] takeScreenshot() {
         return ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES);
@@ -27,8 +31,9 @@ public class AddAdvertisementInFavourites {
     @BeforeAll
     static void beforeAll() {
         Configuration.browser = "chrome";
+        Configuration.browserVersion = "116.0.5845.141";
         Configuration.browserSize = "1920x1080";
-        Configuration.pageLoadStrategy = "normal";
+        Configuration.pageLoadStrategy = "eager";
         Configuration.pageLoadTimeout = 50000;
     }
     @Test
@@ -39,12 +44,13 @@ public class AddAdvertisementInFavourites {
     public void checkAddingAdvertisementsToFavorites() {
         SelenideLogger.addListener("allure", new AllureSelenide().screenshots(true));
         step("Открываем страницу объявления", ()-> {
-            open(baseURL + "/nikel/knigi_i_zhurnaly/domain-driven_design_distilled_vaughn_vernon_2639542363");
+            open(baseURL + cardURL);
             takeScreenshot();
         });
 
-        step("Кликаем на кнопку < Добавить > в избранное", ()-> {
-            $(".desktop-usq1f1").click();
+        step("Кликаем на кнопку < Добавить > в избранное, проверяем всплывающее уведомление", ()-> {
+            $(byText("Добавить в избранное")).click();
+            $("a[href=\"/favorites/knigi_i_zhurnaly\"]").should(Condition.visible);
             takeScreenshot();
         });
 
@@ -53,8 +59,10 @@ public class AddAdvertisementInFavourites {
             takeScreenshot();
         });
 
-        step("Проверяем наличие элемента с названием", ()-> {
-            $(withText("Domain-Driven Design Distilled Vaughn Vernon")).should(Condition.exist);
+        step("Проверяем наличие элемента с названием и то, что он выбран (наличие закрашенного сердечка справа)", ()-> {
+            $(withText("Domain-Driven Design Distilled Vaughn Vernon")).should(exist);
+            $("div[data-marker=item-2639542363] div.withFavorites-heart_fill-InZcS").should(exist);
+            $("div[data-marker=item-2639542363] a[href=\"" + cardURL + "\"]").should(exist);
             takeScreenshot();
         });
     }
