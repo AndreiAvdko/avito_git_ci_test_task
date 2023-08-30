@@ -32,7 +32,7 @@ public class AddAdvertisementInFavourites {
     static void beforeAll() {
         Configuration.browser = "chrome";
         Configuration.browserSize = "1920x1080";
-        Configuration.pageLoadStrategy = "eager";
+        Configuration.pageLoadStrategy = "normal";
         Configuration.pageLoadTimeout = 50000;
     }
     @Test
