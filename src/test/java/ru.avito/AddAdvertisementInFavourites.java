@@ -31,7 +31,6 @@ public class AddAdvertisementInFavourites {
     @BeforeAll
     static void beforeAll() {
         Configuration.browser = "chrome";
-        Configuration.browserVersion = "116.0.5845.141";
         Configuration.browserSize = "1920x1080";
         Configuration.pageLoadStrategy = "eager";
         Configuration.pageLoadTimeout = 50000;
