@@ -1,0 +1,2 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"broken","Wed Aug 30 17:56:47 GMT 2023","Wed Aug 30 17:57:41 GMT 2023","53306","","ru.avito.AddAdvertisementInFavourites","","ru.avito.AddAdvertisementInFavourites","checkAddingAdvertisementsToFavorites","Проверка добавления в избранное объявления с карточки объявления",""
